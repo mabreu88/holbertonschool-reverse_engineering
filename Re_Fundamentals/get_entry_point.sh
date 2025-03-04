@@ -21,7 +21,7 @@ if ! file "$file_name" | grep -q "ELF"; then
 fi
 
 # Extract elf header
-magic_number=$(hexdump -n 16 -e '12/1 "%02x " "\n"' "$file_name")
+magic_number=$(hexdump -n 16 -e '16/1 "%02x "' "$file_name" | sed 's/ $//')
 class=$(readelf -h "$file_name" | grep "Class:" | awk '{print $2, $3}')
 byte_order=$(readelf -h "$file_name" | grep "Data:" | awk '{print $2, $3}')
 entry_point_address=$(readelf -h "$file_name" | grep "Entry point address:" | awk '{print $4}')
